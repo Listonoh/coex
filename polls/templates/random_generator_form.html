@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Random Generator</h1>
+    generates n random numbers between a and b, with equal distribution
+    <div class="container-fluid body-content">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_table }}
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+{% endblock %}

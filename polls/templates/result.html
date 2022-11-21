@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1> {{result}} </h1>
+    <div>
+        count: {{result.count}}
+    </div>
+    <div> date: {{result.timestamp}}</div>
+    <div>
+        list: {{result.result_list}}
+    </div>
+
+    <div>
+        {% for key, percentage in result.distribution.items %}
+            <p> {{key}} : {{percentage}}% </p>
+        {% endfor %}
+    </div>
+    <div>
+        <a href="/results">Back to results</a>
+    </div>
+{% endblock %}
