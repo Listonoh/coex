@@ -35,3 +35,17 @@ class AdvanceRandomGeneratorForm(RandomGeneratorForm):
             'to_number': forms.NumberInput(attrs={'class': 'form-control'}),
             'count': forms.NumberInput(attrs={'class': 'form-control'}),
         }
+    
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.generator_type = RandomGenerator.GeneratorChoices.ADVANCED
+        if commit:
+            instance.save()
+        return instance
+
+    def clean(self) -> Dict[str, Any]:
+        if self.cleaned_data['from_number'] < 1:
+            raise forms.ValidationError('From number must be greater than 0')
+        if self.cleaned_data['to_number'] < 1:
+            raise forms.ValidationError('To number must be greater than 0')
+        return super().clean()

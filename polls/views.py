@@ -1,7 +1,8 @@
+from itertools import chain
 from polls.forms import RandomGeneratorForm, AdvanceRandomGeneratorForm
 from django.views.generic import CreateView, ListView, DetailView
 
-from polls.models import RandomGenerator
+from polls.models import AdvanceRandomGenerator, RandomGenerator
 
 
 class RandomGeneratorFormView(CreateView):
@@ -21,11 +22,14 @@ class AdvanceRandomGeneratorFormView(RandomGeneratorFormView):
 
 
 class ResultsView(ListView):
-    model = RandomGenerator
+    # model = RandomGenerator
     template_name = 'results.html'
     context_object_name = 'results'
     paginate_by = 5
     ordering = ['-timestamp']
+
+    def get_queryset(self):
+        return list(AdvanceRandomGenerator.objects.all()) + list(RandomGenerator.objects.all())
 
 
 class ResultView(DetailView):
